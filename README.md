@@ -9,6 +9,3 @@ i have made discussion open can have question there<br>
 To install DGL, use the following command: `pip install dgl -f https://data.dgl.ai/wheels/torch-2.4/repo.html`. <br>
 pytorch should be version 2.4 <br>
 To install skitlearn use `pip install scikit-learn`. <br>
-About
-implementation of The Intelligible and Effective Graph Neural Additive Networks with dgl
-/interpretable-GNNs
