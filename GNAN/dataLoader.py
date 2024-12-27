@@ -1,6 +1,6 @@
 import os
 import dgl
-
+import random
 import dgl.data
 import torch
 from preprocessdata import preProcessData
@@ -12,9 +12,21 @@ def getData(data_name="mutagenicity", processed_data_dir="processed_data"):
     else:
         data = dgl.data.LegacyTUDataset("Mutagenicity")
         preProcessData(data)
+
     num_class = data.num_classes
     num_feats = data[0][0].ndata["feat"].shape[1]
-    train_data, valid_data, test_data = dgl.data.utils.split_dataset(data, shuffle=True)
+    # Randomly select 500 graphs from the dataset
+    selected_indices = random.sample(range(len(data)), 500)
+    selected_data = [data[i] for i in selected_indices]
+
+    # Split the selected 500 graphs into 300 for training, 100 for validation, and 100 for testing
+    train_data, valid_data, test_data = (
+        selected_data[:300],
+        selected_data[300:400],
+        selected_data[400:],
+    )
+
+    # train_data, valid_data, test_data = dgl.data.utils.split_dataset(data, shuffle=True)
     train_loader = dgl.dataloading.GraphDataLoader(train_data, batch_size=1)
     valid_loader = dgl.dataloading.GraphDataLoader(valid_data, batch_size=1)
     test_loader = dgl.dataloading.GraphDataLoader(test_data, batch_size=1)
