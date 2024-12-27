@@ -49,4 +49,4 @@ def getData(processed_data_dir="processed_data/mutagenicity_processed_graphs.bin
         torch.unique(torch.tensor(labels)).tolist()
     )  # Use unique labels from the dataset
 
-    return train_data[0], valid_data[0], test_data[0], num_feats, num_class
+    return train_data, valid_data, test_data, num_feats, num_class
