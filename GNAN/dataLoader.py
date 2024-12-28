@@ -46,7 +46,7 @@ def getData(processed_data_dir="processed_data/mutagenicity_processed_graphs.bin
 
     # Determine the number of classes based on the unique labels
     num_class = len(
-        torch.unique(torch.tensor(labels)).tolist()
+        torch.unique(labels).tolist()
     )  # Use unique labels from the dataset
 
     return train_data, valid_data, test_data, num_feats, num_class
