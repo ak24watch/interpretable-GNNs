@@ -18,7 +18,7 @@ def preProcessData(data, data_name="mutagenicity", processed_data_dir="processed
 
         # Calculate distance matrix (inverse of shortest distance)
         distance_matrix = 1 / (1 + shortest_dist_matrix)
-
+        distance_matrix[torch.isinf(distance_matrix)] = 0
         # Add these matrices as node features
         graph.ndata["normalization_distance_matrix"] = normalization_distance_matrix
         graph.ndata["distance_matrix"] = distance_matrix.float()
