@@ -10,7 +10,7 @@ def preProcessData(data, data_name="mutagenicity", processed_data_dir="processed
     for graph in graphs:
         # Compute the shortest distance matrix
         shortest_dist_matrix = dgl.shortest_dist(graph)
-
+        shortest_dist_matrix[shortest_dist_matrix==-1] = 1e-6
         # Calculate normalization distance matrix (binary matrix where 1 means the nodes are connected)
         normalization_distance_matrix = 1 * (
             shortest_dist_matrix[..., :, None] == shortest_dist_matrix[..., None, :]
@@ -18,7 +18,7 @@ def preProcessData(data, data_name="mutagenicity", processed_data_dir="processed
 
         # Calculate distance matrix (inverse of shortest distance)
         distance_matrix = 1 / (1 + shortest_dist_matrix)
-        distance_matrix[torch.isinf(distance_matrix)] = 0
+        # distance_matrix[torch.isinf(distance_matrix)] = 0
         # Add these matrices as node features
         graph.ndata["normalization_distance_matrix"] = normalization_distance_matrix
         graph.ndata["distance_matrix"] = distance_matrix.float()
